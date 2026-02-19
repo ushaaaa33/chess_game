@@ -1,0 +1,213 @@
+/* ================================
+   ROOT VARIABLES
+   ================================ */
+:root {
+    --primary:  #2c3e50;
+    --accent:   #3498db;
+    --accent-h: #2980b9;
+    --danger:   #e74c3c;
+    --success:  #2ed573;
+    --radius:   12px;
+    --shadow:   0 4px 24px rgba(0,0,0,0.2);
+}
+
+/* ================================
+   RESET & BASE
+   ================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    min-height: 100vh;
+    color: #f0f0f0;
+}
+
+/* ================================
+   NAVBAR
+   ================================ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.nav-brand { font-size: 1.4rem; font-weight: 700; }
+.nav-links  { display: flex; align-items: center; gap: 1rem; }
+.nav-user   { font-size: 0.9rem; opacity: 0.75; }
+
+/* ================================
+   BUTTONS
+   ================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.3rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+.btn-primary:hover {
+    background: var(--accent-h);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52,152,219,0.4);
+}
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+.btn-outline:hover { background: rgba(255,255,255,0.1); }
+.btn-full   { width: 100%; justify-content: center; padding: 0.85rem; }
+.btn-sm     { padding: 0.4rem 0.8rem; font-size: 0.82rem; }
+
+/* ================================
+   AUTH PAGES
+   ================================ */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.auth-card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow);
+}
+
+.auth-header { text-align: center; margin-bottom: 2rem; }
+.chess-icon  { font-size: 3rem; margin-bottom: 0.5rem; }
+.auth-header h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+.auth-header p  { opacity: 0.65; font-size: 0.95rem; }
+
+/* ================================
+   FORMS
+   ================================ */
+.form-group { margin-bottom: 1.2rem; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.14);
+}
+.form-control::placeholder { opacity: 0.45; }
+
+.field-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.form-extras { text-align: right; margin-bottom: 1rem; }
+.forgot-link {
+    color: var(--accent);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+.forgot-link:hover { text-decoration: underline; }
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    opacity: 0.75;
+}
+.auth-footer a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ================================
+   FLASH MESSAGES
+   ================================ */
+.messages     { margin-bottom: 1rem; }
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.alert-success { background: rgba(46,213,115,0.15); border: 1px solid #2ed573; }
+.alert-error   { background: rgba(231,76,60,0.15);  border: 1px solid #e74c3c; }
+.alert-info    { background: rgba(52,152,219,0.15); border: 1px solid #3498db; }
+.alert-warning { background: rgba(243,156,18,0.15); border: 1px solid #f39c12; }
+
+
+/* ================================
+   GOOGLE OAUTH BUTTON
+   ================================ */
+.btn-google {
+    background: white;
+    color: #333333;
+    border: 1px solid #dddddd;
+    font-weight: 600;
+}
+.btn-google:hover {
+    background: #f5f5f5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+
+/* ================================
+   DIVIDER (the OR line)
+   ================================ */
+.divider {
+    text-align: center;
+    margin: 1.5rem 0;
+    position: relative;
+}
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+}
+.divider::before { left: 0; }
+.divider::after  { right: 0; }
+.divider span {
+    padding: 0 0.75rem;
+    font-size: 0.85rem;
+    opacity: 0.5;
+}

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chess Game — Play{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/chess.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════
+     MAIN GAME LAYOUT
+═══════════════════════════════════════ -->
+<div class="game-wrapper">
+
+    <!-- ── LEFT SIDEBAR ─────────────────── -->
+    <div class="sidebar">
+
+        <!-- Player Cards -->
+        <div class="player-card ai-card">
+            <div class="player-avatar">🤖</div>
+            <div class="player-info">
+                <span class="player-name">AI Opponent</span>
+                <span class="player-label">Black ⬛</span>
+            </div>
+            <div class="player-status" id="ai-status"></div>
+        </div>
+
+        <!-- Game Status Box -->
+        <div class="status-box" id="status-box">
+            <div class="status-icon" id="status-icon">♟</div>
+            <div class="status-text" id="status-text">
+                Your turn — select a piece
+            </div>
+        </div>
+
+        <!-- Player Card (You) -->
+        <div class="player-card you-card">
+            <div class="player-avatar">👤</div>
+            <div class="player-info">
+                <span class="player-name">{{ user.username }}</span>
+                <span class="player-label">White ⬜</span>
+            </div>
+            <div class="player-status" id="you-status"></div>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="controls">
+            <a href="{% url 'game:new_game' %}" class="btn btn-primary">
+                ♻ New Game
+            </a>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-outline">
+                Logout
+            </a>
+        </div>
+
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <h3>📊 Your Stats</h3>
+            <div class="stat-row">
+                <span>Games Played</span>
+                <strong>{{ user.games_played }}</strong>
+            </div>
+            <div class="stat-row">
+                <span>Games Won</span>
+                <strong>{{ user.games_won }}</strong>
+            </div>
+            <div class="stat-row">
+                <span>Win Rate</span>
+                <strong>{{ user.win_rate }}%</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── CHESS BOARD CENTER ────────────── -->
+    <div class="board-section">
+
+        <!-- Column labels a-h -->
+        <div class="col-labels">
+            <span></span>
+            {% for l in "abcdefgh" %}
+            <span>{{ l }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="board-row">
+            <!-- Row labels 8-1 -->
+            <div class="row-labels">
+                {% for n in "87654321" %}
+                <span>{{ n }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- The Chess Board Canvas -->
+            <canvas id="chess-board"></canvas>
+        </div>
+
+    </div>
+
+    <!-- ── RIGHT SIDEBAR ─────────────────── -->
+    <div class="sidebar right-sidebar">
+
+        <!-- Captured Pieces -->
+        <div class="captured-panel">
+            <h3>⚔ Captured</h3>
+            <div class="captured-row">
+                <span class="captured-label">You took:</span>
+                <div id="captured-by-white" class="captured-pieces"></div>
+            </div>
+            <div class="captured-row">
+                <span class="captured-label">AI took:</span>
+                <div id="captured-by-black" class="captured-pieces"></div>
+            </div>
+        </div>
+
+        <!-- Move History -->
+        <div class="history-panel">
+            <h3>📜 Move History</h3>
+            <div id="move-history" class="move-list">
+                <div class="no-moves">No moves yet</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════
+     GAME OVER MODAL
+═══════════════════════════════════════ -->
+<div id="game-over-modal" class="modal hidden">
+    <div class="modal-card">
+        <div class="modal-icon" id="modal-icon">🏆</div>
+        <h2 id="modal-title">Game Over</h2>
+        <p id="modal-message">White wins!</p>
+        <div class="modal-buttons">
+            <a href="{% url 'game:new_game' %}"
+               class="btn btn-primary">
+                ♻ Play Again
+            </a>
+            <a href="{% url 'accounts:logout' %}"
+               class="btn btn-outline">
+                Logout
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+<!-- Pass Django data to JavaScript -->
+<script>
+    const GAME_ID      = {{ game.id }};
+    const CSRF_TOKEN   = '{{ csrf_token }}';
+    const GAME_STATUS  = '{{ game.status }}';
+    const INITIAL_BOARD = {{ game.board_state|safe }};
+</script>
+<script src="{% static 'js/chess.js' %}"></script>
+{% endblock %}
