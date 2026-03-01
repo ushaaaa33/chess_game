@@ -11,10 +11,6 @@ from .chess_logic import (
 )
 
 
-# ─────────────────────────────────────────
-# MAIN GAME PAGE
-# ─────────────────────────────────────────
-
 @login_required
 def index(request):
     """
@@ -38,10 +34,6 @@ def index(request):
         'user': request.user,
     })
 
-
-# ─────────────────────────────────────────
-# NEW GAME
-# ─────────────────────────────────────────
 
 @login_required
 def new_game(request):

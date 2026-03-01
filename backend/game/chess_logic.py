@@ -1,22 +1,7 @@
-"""
-chess_logic.py
-==============
-Pure Python chess logic — no Pygame, no graphics.
-The board is a list of lists where each cell is either:
-  - None (empty square)
-  - A dict like: {'color': 'white', 'type': 'pawn', 'has_moved': False}
-"""
-
 import random
 import copy
 
-
-# ─────────────────────────────────────────
-# BOARD INITIALIZATION
-# ─────────────────────────────────────────
-
 def create_piece(color, ptype):
-    """Create a piece dictionary."""
     return {
         'color': color,   # 'white' or 'black'
         'type': ptype,    # 'pawn','rook','knight','bishop','queen','king'
@@ -25,51 +10,41 @@ def create_piece(color, ptype):
 
 
 def init_board():
-    """
-    Create the starting chess board.
-    Returns an 8x8 list of lists.
-    Row 0 = black's back rank, Row 7 = white's back rank.
-    """
-    # Start with all empty squares
     board = [[None for _ in range(8)] for _ in range(8)]
 
-    # ── Pawns ──────────────────────────────
+    # Pawns
     for col in range(8):
         board[1][col] = create_piece('black', 'pawn')
         board[6][col] = create_piece('white', 'pawn')
 
-    # ── Rooks ──────────────────────────────
+    #  Rooks 
     board[0][0] = create_piece('black', 'rook')
     board[0][7] = create_piece('black', 'rook')
     board[7][0] = create_piece('white', 'rook')
     board[7][7] = create_piece('white', 'rook')
 
-    # ── Knights ────────────────────────────
+    # Knights 
     board[0][1] = create_piece('black', 'knight')
     board[0][6] = create_piece('black', 'knight')
     board[7][1] = create_piece('white', 'knight')
     board[7][6] = create_piece('white', 'knight')
 
-    # ── Bishops ────────────────────────────
+    # Bishops
     board[0][2] = create_piece('black', 'bishop')
     board[0][5] = create_piece('black', 'bishop')
     board[7][2] = create_piece('white', 'bishop')
     board[7][5] = create_piece('white', 'bishop')
 
-    # ── Queens ─────────────────────────────
+    # Queens 
     board[0][3] = create_piece('black', 'queen')
     board[7][3] = create_piece('white', 'queen')
 
-    # ── Kings ──────────────────────────────
+    # Kings 
     board[0][4] = create_piece('black', 'king')
     board[7][4] = create_piece('white', 'king')
 
     return board
 
-
-# ─────────────────────────────────────────
-# MOVE GENERATION
-# ─────────────────────────────────────────
 
 def get_valid_moves(board, piece, row, col):
     """
@@ -287,10 +262,6 @@ def is_stalemate(board, color):
                     return False
     return True
 
-
-# ─────────────────────────────────────────
-# AI OPPONENT
-# ─────────────────────────────────────────
 
 def ai_move(board):
     """

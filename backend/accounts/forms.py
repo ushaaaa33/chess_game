@@ -2,14 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 
-# get_user_model() safely returns our CustomUser
-# Never import CustomUser directly in forms — use this instead
 User = get_user_model()
 
-
-# ─────────────────────────────────────────
-# SIGNUP FORM
-# ─────────────────────────────────────────
 class SignupForm(UserCreationForm):
     """
     UserCreationForm already handles:
@@ -78,10 +72,6 @@ class SignupForm(UserCreationForm):
             )
         return username
 
-
-# ─────────────────────────────────────────
-# LOGIN FORM
-# ─────────────────────────────────────────
 class LoginForm(AuthenticationForm):
     """
     AuthenticationForm already handles:

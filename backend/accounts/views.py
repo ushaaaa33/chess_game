@@ -3,19 +3,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import SignupForm, LoginForm
 
-
-# ─────────────────────────────────────────
-# HOME — redirect based on login status
-# ─────────────────────────────────────────
 def home(request):
     if request.user.is_authenticated:
         return redirect('game:index')
     return redirect('accounts:login')
 
-
-# ─────────────────────────────────────────
-# SIGNUP
-# ─────────────────────────────────────────
 def signup_view(request):
     # If already logged in, no need to sign up again
     if request.user.is_authenticated:
@@ -48,10 +40,6 @@ def signup_view(request):
 
     return render(request, 'accounts/signup.html', {'form': form})
 
-
-# ─────────────────────────────────────────
-# LOGIN
-# ─────────────────────────────────────────
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('game:index')
@@ -83,10 +71,6 @@ def login_view(request):
 
     return render(request, 'accounts/login.html', {'form': form})
 
-
-# ─────────────────────────────────────────
-# LOGOUT
-# ─────────────────────────────────────────
 def logout_view(request):
     # logout() deletes the session from the database
     # and removes the cookie from the browser

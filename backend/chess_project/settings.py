@@ -66,19 +66,11 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-
-# ─────────────────────────────────────────
-# ALLAUTH CONFIGURATION
-# ─────────────────────────────────────────
-
 # Use email as the primary identifier
 ACCOUNT_LOGIN_METHODS = {'email'}
 
 # Email is required for signup
-ACCOUNT_EMAIL_REQUIRED = True
-
-# Username is also required
-ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
 # Don't force email verification during development
 # Change to 'mandatory' in production
