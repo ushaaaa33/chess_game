@@ -3,11 +3,15 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import SignupForm, LoginForm
 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('game:index')
     return redirect('accounts:login')
 
+@csrf_exempt
 def signup_view(request):
     # If already logged in, no need to sign up again
     if request.user.is_authenticated:
@@ -40,6 +44,7 @@ def signup_view(request):
 
     return render(request, 'accounts/signup.html', {'form': form})
 
+@csrf_exempt
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('game:index')

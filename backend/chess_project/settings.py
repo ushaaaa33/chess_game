@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # Third party
+    'rest_framework',              # ← ADD
+    'rest_framework.authtoken',    # ← ADD
+    'corsheaders',
     'allauth',                       # ← ADD THIS
     'allauth.account',               # ← ADD THIS
     'allauth.socialaccount',         # ← ADD THIS
@@ -99,6 +102,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -239,13 +243,16 @@ SESSION_COOKIE_AGE = 1209600
 
 # Prevent JavaScript from reading the session cookie
 # This protects against XSS attacks
-SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = False
 
 # Only send cookie over HTTPS (set True in production)
 SESSION_COOKIE_SECURE = False  # Change to True in production
 
 # Prevent cross-site request forgery
 CSRF_COOKIE_HTTPONLY = False   # Must be False so JS can read CSRF token
+
+
+SESSION_COOKIE_SAMESITE = 'None'       # ← Allow cross-origin
 
 
 # ─────────────────────────────────────────
@@ -266,3 +273,49 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Who the reset email appears to come from
 DEFAULT_FROM_EMAIL = 'Chess Game <noreply@chessgame.com>'
+
+
+
+# ─────────────────────────────────────────
+# CORS SETTINGS
+# ─────────────────────────────────────────
+CORS_ALLOW_ALL_ORIGINS      = True
+CORS_ALLOW_CREDENTIALS      = True
+CORS_EXPOSE_HEADERS         = ['Set-Cookie']
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'cookie',
+    'x-session',
+]
+
+
+# ─────────────────────────────────────────
+# CSRF SETTINGS
+# ─────────────────────────────────────────
+CSRF_COOKIE_SAMESITE  = 'None'
+CSRF_COOKIE_SECURE    = False
+CSRF_COOKIE_HTTPONLY  = False
+CSRF_TRUSTED_ORIGINS  = [
+    'http://localhost:61766',
+    'http://127.0.0.1:61766',
+    'http://localhost:63619',
+    'http://127.0.0.1:63619',
+]
+
+
+# ─────────────────────────────────────────
+# REST FRAMEWORK — Token Authentication
+# ─────────────────────────────────────────
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
